@@ -7,12 +7,12 @@ def script(check, x, y):
     for i in range(-10, 11):
         for j in range(-10, 11):
             if check("gold", x + i, y + j):
-                if not check("wall", x + 1, y) and i > 0 and i >= j:
+                if not check("wall", x + 1, y) and i > 0:
                     return "right"
-                if not check("wall", x - 1, y) and i < 0 and i <= j:
+                if not check("wall", x - 1, y) and i < 0:
                     return "left"
-                if not check("wall", x, y + 1) and j > 0 and j >= i:
+                if not check("wall", x, y + 1) and j > 0:
                     return "down"
-                if not check("wall", x, y - 1) and j < 0 and j <= i:
+                if not check("wall", x, y - 1) and j < 0:
                     return "up"
     return random.choice(["left", "right", "up", "down"])

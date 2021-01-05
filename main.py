@@ -7,7 +7,6 @@ from random import randrange, shuffle
 import tkinter as tk
 from plitk import load_tileset, PliTk
 
-WIDTH, HEIGHT = 1000, 1000
 SCALE = 2
 DELAY = 100
 

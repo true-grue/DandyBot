@@ -108,7 +108,7 @@ class Board:
         if self.current_round < len(self.game["rounds"]):
             lines = [("Round:%4d\n" % (self.current_round + 1))]
         else:
-            lines = ["Game over!\n"]
+            lines = ["GAME OVER!\n"]
         players = sorted(self.players, key=lambda x: x.cost, reverse=True)
         for p in players:
             lines.append("%s:%4d" % (p.name, p.cost))

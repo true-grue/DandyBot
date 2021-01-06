@@ -4,4 +4,11 @@
 
 The game uses only the Python standard library. Graphics assets are from [here](https://opengameart.org/content/dungeon-crawl-32x32-tiles-supplemental).
 
+See [random_bot.py](random_bot.py) and [user_bot.py](user_bot.py) for API examples.
+
+## Some hints
+
+1. Check for the current level number, but try to generalize your code.
+2. Do not use any global data or state.
+
 ![screenshot](screenshot.png)

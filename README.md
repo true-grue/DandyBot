@@ -8,7 +8,8 @@ See [random_bot.py](random_bot.py) and [user_bot.py](user_bot.py) for API exampl
 
 ## Some hints
 
-1. Check for the current level number, but try to generalize your code.
-2. Do not use any global data or state.
+1. You may check for "wall", "gold" and "player" at the specified position.
+2. Check for the current level number, but try to generalize your code.
+3. Do not use any global data or state.
 
 ![screenshot](screenshot.png)

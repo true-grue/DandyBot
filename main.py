@@ -1,10 +1,11 @@
-﻿import time
+import time
 import sys
 import json
 from importlib import import_module
 from pathlib import Path
-from random import randrange, shuffle
+from random import shuffle
 import tkinter as tk
+
 from plitk import load_tileset, PliTk
 
 SCALE = 1
@@ -100,16 +101,19 @@ class Board:
     def play(self):
         for p in self.players:
             p.act(p.script(self.check, p.x, p.y))
+        self.update_score()
         if self.gold >= self.level["gold"]:
             return self.next_level()
         self.steps += 1
         return self.steps < self.level["steps"]
 
     def update_score(self):
-        lines = [("Level:%4d\n" % (self.level_index + 1))]
+        lines = [f"Level:{self.level_index + 1}/{len(self.game['levels'])}\n"]
         players = sorted(self.players, key=lambda x: x.gold, reverse=True)
         for p in players:
             lines.append("%s:%4d" % (p.name, p.gold))
+
+        lines.append("STEPS LEFT: %s" % (self.level["steps"] - self.steps))
         self.label["text"] = "\n".join(lines)
 
     def next_level(self):
@@ -181,4 +185,5 @@ def start_game():
     root.mainloop()
 
 
-start_game()
+if __name__ == '__main__':
+    start_game()

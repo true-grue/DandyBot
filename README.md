@@ -25,8 +25,8 @@ Player's action is:
 Available check types are:
 + `"gold"` - returns gold amount on tile
 + `"player"` - tells if tile has player on it
-+ `"wall"` - tells if tile is not impassable
++ `"wall"` - tells if tile is impassable
 + `"level"` - returns current level number starting from 1
-+ `"empty"` - tells if nothing above is true
++ `"empty"` - tells if nothing of above is true
 
 ![screenshot](screenshot.png)

@@ -84,6 +84,8 @@ class Board:
         self.map[x][y] = " "
         self.update(x, y)
         self.update_score()
+        if self.gold >= self.level["gold"]:
+            return self.next_level()
 
     def check(self, cmd, *args):
         if cmd == "level":

@@ -101,7 +101,7 @@ class Board:
         for p in self.players:
             p.act(p.script(self.check, p.x, p.y))
             if self.gold >= self.level["gold"]:
-                return self.next_level()
+                return self.select_next_level()
         self.steps += 1
         return self.steps < self.level["steps"]
 
@@ -112,7 +112,7 @@ class Board:
             lines.append("%s:%4d" % (p.name, p.gold))
         self.label["text"] = "\n".join(lines)
 
-    def next_level(self):
+    def select_next_level(self):
         self.level_index += 1
         if self.level_index < len(self.game["levels"]):
             self.load_level()

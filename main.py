@@ -100,8 +100,8 @@ class Board:
     def play(self):
         for p in self.players:
             p.act(p.script(self.check, p.x, p.y))
-        if self.gold >= self.level["gold"]:
-            return self.next_level()
+            if self.gold >= self.level["gold"]:
+                return self.next_level()
         self.steps += 1
         return self.steps < self.level["steps"]
 

@@ -19,15 +19,15 @@ See [random_bot.py](bots/random_bot.py) and [user_bot.py](bots/user_bot.py) for 
 ## API
 Available actions and entities are described in 'game/api.py'.
 Player's action is:
-+ `"Actions.TAKE"` for taking gold from players tile
-+ `"Actions.LEFT"`, `"Actions.RIGHT"`, `"Actions.UP"`, `"Actions.DOWN"` for moving
-+ `"Actions.PASS"` for doing essentially nothing
++ `Actions.TAKE` for taking gold from players tile
++ `Actions.LEFT`, `Actions.RIGHT`, `Actions.UP`, `Actions.DOWN` for moving
++ `Actions.PASS` for doing essentially nothing
 
 Available check entities are:
-+ `"Entities.GOLD"` - returns gold amount on tile
-+ `"Entities.PLAYER"` - tells if tile has player on it
-+ `"Entities.WALL"` - tells if tile is impassable
-+ `"Entities.LEVEL"` - returns current level number starting from 1
-+ `"Entities.EMPTY"` - tells if nothing of above is true
++ `Entities.GOLD` - returns gold amount on tile
++ `Entities.PLAYER` - tells if tile has player on it
++ `Entities.WALL` - tells if tile is impassable
++ `Entities.LEVEL` - returns current level number starting from 1
++ `Entities.EMPTY` - tells if nothing of above is true
 
 ![screenshot](screenshot.png)

@@ -6,7 +6,7 @@ This is a base version of the game. The development continues [here](https://git
 
 The game uses only the Python standard library. Graphics assets are taken from [here](https://opengameart.org/content/dungeon-crawl-32x32-tiles-supplemental).
 
-See [random_bot.py](random_bot.py) and [user_bot.py](user_bot.py) for API examples.
+See [random_bot.py](bots/random_bot.py) and [user_bot.py](bots/user_bot.py) for API examples.
 
 ## Game rules
 

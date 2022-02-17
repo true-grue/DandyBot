@@ -1,25 +1,16 @@
 ﻿import time
 import sys
 import json
-from importlib import import_module
-from pathlib import Path
-from random import randrange, shuffle
 import tkinter as tk
-from plitk import load_tileset, PliTk
+import importlib.resources
+from importlib import import_module
+from random import shuffle
+from game.exceptions import ActionNotFoundError, BotNotFoundError, EntitiyNotFoundError, LevelNotFoundError, MapNotFoundError, TilesConfigError
+from game.plitk import load_tileset, PliTk
+from game.api import Entities, Actions
 
 SCALE = 1
 DELAY = 50
-
-UP = "up"
-DOWN = "down"
-LEFT = "left"
-RIGHT = "right"
-TAKE = "take"
-PASS = "pass"
-PLAYER = "player"
-GOLD = "gold"
-WALL = "wall"
-EMPTY = "empty"
 
 
 class Board:
@@ -36,16 +27,34 @@ class Board:
     def load_players(self):
         self.players = []
         for i, name in enumerate(self.game["players"]):
-            script = import_module(name).script
-            tile = self.game["tiles"]["@"][i]
-            self.players.append(Player(name, script, self, tile))
+            try:
+                script = import_module('bots.' + name).script
+                tile = self.game["tiles"]["@"][i]
+                self.players.append(Player(name, script, self, tile))
+            except ModuleNotFoundError:
+                raise BotNotFoundError(
+                    "Bot with name '{}' not found".format(name))
+            except KeyError:
+                raise TilesConfigError(
+                    "Tiles config are empty or set incorrectly")
         shuffle(self.players)
 
     def load_level(self):
         self.gold = 0
         self.steps = 0
-        self.level = self.game["levels"][self.level_index]
-        data = self.game["maps"][self.level["map"]]
+
+        try:
+            self.level = self.game["levels"][self.level_index]
+        except IndexError:
+            raise LevelNotFoundError(
+                "Level with index {} not found".format(self.level_index))
+
+        try:
+            data = self.game["maps"][self.level["map"]]
+        except IndexError:
+            raise MapNotFoundError(
+                "Map with index {} not found".format(self.level["map"]))
+
         cols, rows = len(data[0]), len(data)
         self.map = [[data[y][x] for y in range(rows)] for x in range(cols)]
         self.has_player = [[None for y in range(rows)] for x in range(cols)]
@@ -80,22 +89,25 @@ class Board:
         self.update(x, y)
 
     def take_gold(self, x, y):
-        self.gold += self.check("gold", x, y)
+        self.gold += self.check(Entities.GOLD, x, y)
         self.map[x][y] = " "
         self.update(x, y)
         self.update_score()
 
     def check(self, cmd, *args):
-        if cmd == "level":
+        if cmd == Entities.LEVEL:
             return self.level_index + 1
         x, y = args
         item = self.get(x, y)
-        if cmd == "wall":
+        if cmd == Entities.WALL:
             return item == "#"
-        if cmd == "gold":
+        elif cmd == Entities.GOLD:
             return int(item) if item.isdigit() else 0
-        if cmd == "player":
+        elif cmd == Entities.PLAYER:
             return item != "#" and self.has_player[x][y]
+        elif cmd != Entities.EMPTY:
+            raise EntitiyNotFoundError(
+                "The entity '{}' does not exist".format(cmd))
 
     def play(self):
         for p in self.players:
@@ -131,28 +143,31 @@ class Player:
 
     def act(self, cmd):
         dx, dy = 0, 0
-        if cmd == UP:
+        if cmd == Actions.UP:
             dy -= 1
-        elif cmd == DOWN:
+        elif cmd == Actions.DOWN:
             dy += 1
-        elif cmd == LEFT:
+        elif cmd == Actions.LEFT:
             dx -= 1
-        elif cmd == RIGHT:
+        elif cmd == Actions.RIGHT:
             dx += 1
-        elif cmd == TAKE:
+        elif cmd == Actions.TAKE:
             self.take()
+        elif cmd != Actions.PASS:
+            raise ActionNotFoundError(
+                "The action '{}' does not exist".format(cmd))
         self.move(dx, dy)
 
     def move(self, dx, dy):
         x, y = self.x + dx, self.y + dy
         board = self.board
         board.remove_player(self)
-        if not board.check("wall", x, y) and not board.check("player", x, y):
+        if not board.check(Entities.WALL, x, y) and not board.check(Entities.PLAYER, x, y):
             self.x, self.y = x, y
         board.add_player(self, self.x, self.y)
 
     def take(self):
-        gold = self.board.check("gold", self.x, self.y)
+        gold = self.board.check(Entities.GOLD, self.x, self.y)
         if gold:
             self.gold += gold
             self.board.take_gold(self.x, self.y)
@@ -175,10 +190,7 @@ def start_game():
                      justify=tk.RIGHT, fg="white", bg="gray20")
     label.pack(side=tk.RIGHT, anchor="n")
     filename = sys.argv[1] if len(sys.argv) == 2 else "game.json"
-    game = json.loads(Path(filename).read_text())
+    game = json.loads(importlib.resources.read_text('game', filename))
     board = Board(game, canvas, label)
     root.after(0, update)
     root.mainloop()
-
-
-start_game()

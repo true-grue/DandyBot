@@ -1,11 +1,11 @@
 ﻿import json
-from pathlib import Path
+import importlib.resources
 import tkinter as tk
 
 
 def load_tileset(filename):
-    tileset = json.loads(Path(filename).read_text())
-    tileset["data"] = Path(tileset["file"]).read_bytes()
+    tileset = json.loads(importlib.resources.read_text('game', filename))
+    tileset["data"] = importlib.resources.read_binary('game', tileset["file"])
     return tileset
 
 

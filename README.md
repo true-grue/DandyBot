@@ -17,16 +17,17 @@ See [random_bot.py](random_bot.py) and [user_bot.py](user_bot.py) for API exampl
 1. Player should not use any global data or state.
 
 ## API
+Available actions and entities are described in 'game/api.py'.
 Player's action is:
-+ `"take"` for taking gold from players tile
-+ `"left"`, `"right"`, `"up"`, `"down"` for moving
-+ `"pass"` for doing essentially nothing
++ `"Actions.TAKE"` for taking gold from players tile
++ `"Actions.LEFT"`, `"Actions.RIGHT"`, `"Actions.UP"`, `"Actions.DOWN"` for moving
++ `"Actions.PASS"` for doing essentially nothing
 
-Available check types are:
-+ `"gold"` - returns gold amount on tile
-+ `"player"` - tells if tile has player on it
-+ `"wall"` - tells if tile is impassable
-+ `"level"` - returns current level number starting from 1
-+ `"empty"` - tells if nothing of above is true
+Available check entities are:
++ `"Entities.GOLD"` - returns gold amount on tile
++ `"Entities.PLAYER"` - tells if tile has player on it
++ `"Entities.WALL"` - tells if tile is impassable
++ `"Entities.LEVEL"` - returns current level number starting from 1
++ `"Entities.EMPTY"` - tells if nothing of above is true
 
 ![screenshot](screenshot.png)

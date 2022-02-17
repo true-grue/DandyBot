@@ -96,6 +96,7 @@ class Board:
             return int(item) if item.isdigit() else 0
         if cmd == "player":
             return item != "#" and self.has_player[x][y]
+        return cmd == "empty"
 
     def play(self):
         for p in self.players:

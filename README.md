@@ -27,6 +27,5 @@ Available check types are:
 + `"player"` - tells if tile has player on it
 + `"wall"` - tells if tile is impassable
 + `"level"` - returns current level number starting from 1
-+ `"empty"` - tells if nothing of above is true
 
 ![screenshot](screenshot.png)

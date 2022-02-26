@@ -8,8 +8,8 @@
   "levels": [
     {
       "map": 0,
-      "start": [0, 4]
-      "steps": 100,
+      "start": [0, 4],
+      "steps": 100
     },
     {
       "map": 1,

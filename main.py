@@ -51,6 +51,8 @@ class Board:
         self.has_player = [[None for y in range(rows)] for x in range(cols)]
         self.canvas.config(width=cols * self.tileset["tile_width"] * SCALE,
                            height=rows * self.tileset["tile_height"] * SCALE)
+        self.level["gold"] = sum(sum(int(cell)
+            if cell.isdigit() else 0 for cell in row) for row in data)
         self.screen.resize(cols, rows)
         for y in range(rows):
             for x in range(cols):

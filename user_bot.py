@@ -17,6 +17,5 @@
         if check("gold", x + 2, y):
             return "right"
         return "up"
-    
-        
+
     return "pass"

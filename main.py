@@ -8,7 +8,7 @@ import tkinter as tk
 from plitk import load_tileset, PliTk
 
 SCALE = 1
-DELAY = 5
+DELAY = 50
 
 UP = "up"
 DOWN = "down"
